@@ -20,7 +20,7 @@ services:
     restart: always
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASS=password
+      - POSTGRES_PASSWORD=password
       - POSTGRES_DB=projectname
       - POSTGRES_PORT=5432
     volumes:
