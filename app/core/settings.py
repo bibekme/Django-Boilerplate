@@ -139,3 +139,7 @@ MEDIA_ROOT = BASE_DIR / "mediafiles"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "users.User"
+
+CELERY_BROKER_URL = os.environ.get(
+    "CELERY_BROKER_URL", default="redis://localhost:6379"
+)

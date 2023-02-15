@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   web:
@@ -20,6 +20,40 @@ services:
       - POSTGRES_USER=hello_django
       - POSTGRES_PASSWORD=hello_django
       - POSTGRES_DB=hello_django_dev
+  rabbitmq:
+    container_name: rabbitmq
+    restart: always
+    image: rabbitmq:3.9-alpine
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+  celeryworker:
+    container_name: celeryworker
+    restart: always
+    build: ./app
+    command: celery -A core worker --pool=prefork -l info
+    depends_on:
+      - rabbitmq
+
+  celeryscheduler:
+    container_name: celeryscheduler
+    restart: always
+    build: ./app
+    command: celery -A core beat -l info
+    depends_on:
+      - celeryworker
+
+  celeryflower:
+    container_name: celeryflower
+    restart: always
+    build: ./app
+    command: celery -A core flower -l info
+    ports:
+      - 5555:5555
+    depends_on:
+      - celeryworker
+      - celeryscheduler
 
 volumes:
   postgres_data:
+  rabbitmq_data:
