@@ -48,7 +48,7 @@ services:
     build: .
     env_file:
       - ./.env.dev
-    command: celery -A core beat -l info
+    command: celery -A core beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
     depends_on:
       - celeryworker
 

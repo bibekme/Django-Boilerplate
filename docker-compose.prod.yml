@@ -1,9 +1,9 @@
-version: "3.8"
+version: "3.9"
 
 services:
   web:
     build:
-      context: ./app
+      context: .
       dockerfile: Dockerfile.prod
     command: gunicorn core.wsgi:application --bind 0.0.0.0:8000
     volumes:
@@ -27,7 +27,7 @@ services:
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
     ports:
-      - 1337:80
+      - 80:80
     depends_on:
       - web
 
