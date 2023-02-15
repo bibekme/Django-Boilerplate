@@ -21,6 +21,13 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
       - ./.env.prod.db
+  redis:
+    image: "bitnami/redis:latest"
+    ports:
+      - 6379:6379
+    environment:
+      - REDIS_REPLICATION_MODE=master
+      - REDIS_PASSWORD=my_master_password
   nginx:
     build: ./nginx
     volumes:
@@ -93,6 +100,18 @@ services:
       DATA_SOURCE_NAME: "postgresql://hello_django:hello_django@db:5432/hello_django_dev?sslmode=disable"
     links:
       - db
+      - prometheus
+  redis-exporter:
+    image: oliver006/redis_exporter
+    ports:
+      - 9121:9121
+    restart: unless-stopped
+    environment:
+      REDIS_ADDR: "redis:6379"
+      REDIS_USER: null
+      REDIS_PASSWORD: my_master_password
+    links:
+      - redis
       - prometheus
 
 volumes:
