@@ -30,8 +30,54 @@ services:
       - 80:80
     depends_on:
       - web
+  rabbitmq:
+    image: rabbitmq:3-management
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    container_name: rabbitmq
+    hostname: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+      - RABBITMQ_DEFAULT_VHOST=/
+    ports:
+      - 5672:5672
+      - 15672:15672
+  celeryworker:
+    container_name: celeryworker
+    restart: always
+    build: .
+    env_file:
+      - ./.env.prod
+    command: celery -A core worker --pool=prefork -l info
+    depends_on:
+      - rabbitmq
+
+  celeryscheduler:
+    container_name: celeryscheduler
+    restart: always
+    build: .
+    env_file:
+      - ./.env.prod
+    command: celery -A core beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    depends_on:
+      - celeryworker
+
+  celeryflower:
+    container_name: celeryflower
+    restart: always
+    build: .
+    env_file:
+      - ./.env.prod
+    command: celery -A core flower -l info
+    ports:
+      - 5555:5555
+    depends_on:
+      - celeryworker
+      - celeryscheduler
 
 volumes:
   postgres_data:
+  rabbitmq_data:
   static_volume:
   media_volume:

@@ -23,6 +23,8 @@ services:
 
   rabbitmq:
     image: rabbitmq:3-management
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
     container_name: rabbitmq
     hostname: rabbitmq
     environment:
@@ -67,3 +69,4 @@ services:
 
 volumes:
   postgres_data:
+  rabbitmq_data:
