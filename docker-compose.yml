@@ -1,11 +1,11 @@
-version: "3.8"
+version: "3.9"
 
 services:
   web:
-    build: ./app
+    build: .
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - ./app/:/usr/src/app/
+      - ./:/usr/src/app/
     ports:
       - 8000:8000
     env_file:
@@ -20,17 +20,24 @@ services:
       - POSTGRES_USER=hello_django
       - POSTGRES_PASSWORD=hello_django
       - POSTGRES_DB=hello_django_dev
-  rabbitmq:
-    container_name: rabbitmq
-    restart: always
-    image: rabbitmq:3.9-alpine
-    volumes:
-      - rabbitmq_data:/var/lib/rabbitmq
 
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+      - RABBITMQ_DEFAULT_VHOST=/
+    ports:
+      - 5672:5672
+      - 15672:15672
   celeryworker:
     container_name: celeryworker
     restart: always
-    build: ./app
+    build: .
+    env_file:
+      - ./.env.dev
     command: celery -A core worker --pool=prefork -l info
     depends_on:
       - rabbitmq
@@ -38,7 +45,9 @@ services:
   celeryscheduler:
     container_name: celeryscheduler
     restart: always
-    build: ./app
+    build: .
+    env_file:
+      - ./.env.dev
     command: celery -A core beat -l info
     depends_on:
       - celeryworker
@@ -46,7 +55,9 @@ services:
   celeryflower:
     container_name: celeryflower
     restart: always
-    build: ./app
+    build: .
+    env_file:
+      - ./.env.dev
     command: celery -A core flower -l info
     ports:
       - 5555:5555
@@ -56,4 +67,3 @@ services:
 
 volumes:
   postgres_data:
-  rabbitmq_data:
