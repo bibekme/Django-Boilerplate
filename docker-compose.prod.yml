@@ -75,6 +75,25 @@ services:
     depends_on:
       - celeryworker
       - celeryscheduler
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+  postgres-exporter:
+    image: prometheuscommunity/postgres-exporter
+    ports:
+      - 9187:9187
+    environment:
+      DATA_SOURCE_NAME: "postgresql://hello_django:hello_django@db:5432/hello_django_dev?sslmode=disable"
+    links:
+      - db
+      - prometheus
 
 volumes:
   postgres_data:
