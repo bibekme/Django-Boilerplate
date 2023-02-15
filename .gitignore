@@ -5,3 +5,5 @@ __pycache
 .env.prod
 .env.prod.db
 .venv/
+mediafiles/
+staticfiles/
