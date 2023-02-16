@@ -1,5 +1,6 @@
 amqp==5.1.1
 asgiref==3.6.0
+async-timeout==4.0.2
 billiard==3.6.4.0
 black==23.1.0
 celery==5.2.7
@@ -25,6 +26,7 @@ psycopg2-binary==2.9.1
 python-crontab==2.7.1
 python-dateutil==2.8.2
 pytz==2022.7.1
+redis==4.5.1
 shortuuid==1.0.11
 six==1.16.0
 sqlparse==0.4.3

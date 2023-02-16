@@ -139,5 +139,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "users.User"
 
 CELERY_BROKER_URL = os.environ.get(
-    "CELERY_BROKER_URL", "amqp://guest:guest@rabbit:5672//"
+    "CELERY_BROKER_URL", "redis://:my_master_password@redis:6379/0"
 )
