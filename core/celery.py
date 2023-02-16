@@ -11,7 +11,7 @@ app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
     "periodic_run_task": {
-        "task": "core.tasks.run_task",
+        "task": "common.tasks.run_task",
         "schedule": 10.0,
     },
 }

@@ -34,7 +34,7 @@ services:
       - ./.env.dev
     command: celery -A core worker --pool=prefork -l info
     depends_on:
-      - rabbitmq
+      - redis
   celeryscheduler:
     container_name: celeryscheduler
     restart: always
@@ -59,4 +59,3 @@ services:
 
 volumes:
   postgres_data:
-  rabbitmq_data:
