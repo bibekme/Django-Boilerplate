@@ -54,7 +54,6 @@ services:
     command: celery -A core beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
     depends_on:
       - celeryworker
-
   celeryflower:
     container_name: celeryflower
     restart: always
@@ -62,8 +61,8 @@ services:
     env_file:
       - ./.env.prod
     command: celery -A core flower -l info
-    ports:
-      - 5555:5555
+    expose:
+      - 5555
     depends_on:
       - celeryworker
       - celeryscheduler
