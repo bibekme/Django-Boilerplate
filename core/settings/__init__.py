@@ -2,7 +2,7 @@ import os
 
 environment = os.environ.get("ENVIRONMENT")
 
-if environment == "development":
+if environment == "dev":
     from .dev import *
 else:
     from .prod import *

@@ -1,10 +1,8 @@
 *.pyc
 __pycache
 .DS_Store
-.env.dev
-.env.prod
-.env.prod.db
-.venv/
+venv/
 mediafiles/
 staticfiles/
 .vscode/
+.env

@@ -1,8 +1,8 @@
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 
-from users.models import User
-from users.tasks import send_mail_to_new_user
+from autho.models import User
+from autho.tasks import send_mail_to_new_user
 
 
 @receiver(post_save, sender=User)

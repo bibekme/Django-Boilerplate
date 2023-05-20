@@ -5,6 +5,11 @@ from django.conf.urls.static import static
 
 from upload.views import image_upload
 
+
+admin.site.site_header = settings.SITE_DISPLAY
+admin.site.site_title = settings.SITE_DISPLAY
+
+
 urlpatterns = [
     path("", include("common.urls")),
     path("", image_upload, name="upload"),
