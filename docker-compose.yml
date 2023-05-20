@@ -21,7 +21,7 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     restart: always
   redis:
-    image: "bitnami/redis:latest"
+    image: redis
     env_file:
       - ./.env
     ports:

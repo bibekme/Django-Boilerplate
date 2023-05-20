@@ -17,18 +17,18 @@ services:
       - db
     restart: always
   db:
-    image: postgres:13.0-alpine
+    image: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
       - ./.env
     restart: always
   redis:
-    image: "bitnami/redis:latest"
+    image: redis
     ports:
       - 6379:6379
     env_file:
-      - ./.env.prod
+      - ./.env
     restart: always
   nginx:
     build: ./nginx
@@ -45,7 +45,7 @@ services:
     restart: always
     build: .
     env_file:
-      - ./.env.prod
+      - ./.env
     command: celery -A core worker --pool=prefork -l info
     depends_on:
       - redis
@@ -53,7 +53,7 @@ services:
     container_name: celeryscheduler
     build: .
     env_file:
-      - ./.env.prod
+      - ./.env
     command: celery -A core beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
     depends_on:
       - celeryworker
@@ -62,7 +62,7 @@ services:
     container_name: celeryflower
     build: .
     env_file:
-      - ./.env.prod
+      - ./.env
     command: celery -A core flower -l info
     expose:
       - 5555
