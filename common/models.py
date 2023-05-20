@@ -18,7 +18,7 @@ class BaseModel(models.Model):
     def new(cls, **kwargs):
         return cls.objects.create(**kwargs)
 
-    def delete(self, force_delete=True, **kwargs):
+    def delete(self, force_delete=False, **kwargs):
         if force_delete:
             super(BaseModel, self).delete(**kwargs)
         else:
