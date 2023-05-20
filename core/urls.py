@@ -6,8 +6,11 @@ from django.conf.urls.static import static
 from upload.views import image_upload
 
 
-admin.site.site_header = settings.SITE_DISPLAY
-admin.site.site_title = settings.SITE_DISPLAY
+site_title_header_display = f"{settings.SITE_DISPLAY_SETTINGS.get('PROJECT_NAME')} - {settings.SITE_DISPLAY_SETTINGS.get('ENVIRONMENT')}"
+
+
+admin.site.site_header = site_title_header_display
+admin.site.site_title = site_title_header_display
 
 
 urlpatterns = [
@@ -21,4 +24,3 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     urlpatterns += [path("__debug__/", include("debug_toolbar.urls"))]
-    

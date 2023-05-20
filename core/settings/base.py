@@ -34,6 +34,7 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "common",
+    "misc",
     "autho",
     "upload",
 ]
@@ -127,6 +128,7 @@ EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "password")
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "noreply@example.com")
 
 
-SITE_DISPLAY = (
-    f"{os.environ.get('APP_NAME').title()} - {os.environ.get('ENVIRONMENT').upper()}"
-)
+SITE_DISPLAY_SETTINGS = {
+    "PROJECT_NAME": os.environ.get("PROJECT_NAME").title(),
+    "ENVIRONMENT": os.environ.get("ENVIRONMENT").upper(),
+}
