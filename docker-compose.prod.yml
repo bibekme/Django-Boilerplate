@@ -93,21 +93,9 @@ services:
     ports:
       - 9187:9187
     environment:
-      DATA_SOURCE_NAME: "postgresql://hello_django:hello_django@db:5432/hello_django_dev?sslmode=disable"
+      DATA_SOURCE_NAME: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/postgres?sslmode=disable"
     links:
       - db
-      - prometheus
-    restart: always
-  redis-exporter:
-    image: oliver006/redis_exporter
-    ports:
-      - 9121:9121
-    environment:
-      REDIS_ADDR: "redis:6379"
-      REDIS_USER: null
-      REDIS_PASSWORD: my_master_password
-    links:
-      - redis
       - prometheus
     restart: always
 volumes:
