@@ -30,7 +30,7 @@ services:
     env_file:
       - ./.env
     volumes:
-      - redis-data:/data
+      - redis_data:/data
     restart: always
   nginx:
     build: ./nginx
@@ -110,5 +110,6 @@ services:
     restart: always
 volumes:
   postgres_data:
+  redis_data:
   static_volume:
   media_volume:
