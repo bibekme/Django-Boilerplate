@@ -81,7 +81,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - grafana-storage:/var/lib/grafana
+      - grafana_storage:/var/lib/grafana
 
     restart: always
   prometheus:
@@ -104,5 +104,6 @@ services:
 volumes:
   postgres_data:
   redis_data:
+  grafana_storage:
   static_volume:
   media_volume:
