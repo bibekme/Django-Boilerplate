@@ -10,43 +10,43 @@ services:
       - 8000:8000
     env_file:
       - ./.env
-    restart: always
     depends_on:
       - db
+    restart: always
   db:
     image: postgres
-    restart: always
     env_file:
       - ./.env
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+    restart: always
   redis:
     image: "bitnami/redis:latest"
     env_file:
       - ./.env
     ports:
       - 6379:6379
+    restart: always
   celeryworker:
     container_name: celeryworker
-    restart: always
     build: .
     env_file:
       - ./.env
     command: celery -A core worker --pool=prefork -l info
     depends_on:
       - redis
+    restart: always
   celeryscheduler:
     container_name: celeryscheduler
-    restart: always
     build: .
     env_file:
       - ./.env
     command: celery -A core beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
     depends_on:
       - celeryworker
+    restart: always
   celeryflower:
     container_name: celeryflower
-    restart: always
     build: .
     env_file:
       - ./.env
@@ -56,10 +56,12 @@ services:
     depends_on:
       - celeryworker
       - celeryscheduler
+    restart: always
   mailserver-dev:
     image: rnwood/smtp4dev
     ports:
       - 2525:25
       - 9000:80
+    restart: always
 volumes:
   postgres_data:

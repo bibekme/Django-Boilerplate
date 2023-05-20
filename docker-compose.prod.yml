@@ -12,21 +12,24 @@ services:
     expose:
       - 8000
     env_file:
-      - ./.env.prod
+      - ./.env
     depends_on:
       - db
+    restart: always
   db:
     image: postgres:13.0-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
-      - ./.env.prod.db
+      - ./.env
+    restart: always
   redis:
     image: "bitnami/redis:latest"
     ports:
       - 6379:6379
     env_file:
       - ./.env.prod
+    restart: always
   nginx:
     build: ./nginx
     volumes:
@@ -36,6 +39,7 @@ services:
       - 80:80
     depends_on:
       - web
+    restart: always
   celeryworker:
     container_name: celeryworker
     restart: always
@@ -47,16 +51,15 @@ services:
       - redis
   celeryscheduler:
     container_name: celeryscheduler
-    restart: always
     build: .
     env_file:
       - ./.env.prod
     command: celery -A core beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
     depends_on:
       - celeryworker
+    restart: always
   celeryflower:
     container_name: celeryflower
-    restart: always
     build: .
     env_file:
       - ./.env.prod
@@ -68,16 +71,19 @@ services:
     depends_on:
       - celeryworker
       - celeryscheduler
+    restart: always
   grafana:
     image: grafana/grafana
     ports:
       - 3000:3000
+    restart: always
   prometheus:
     image: prom/prometheus
     ports:
       - 9090:9090
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    restart: always
   postgres-exporter:
     image: prometheuscommunity/postgres-exporter
     ports:
@@ -87,11 +93,11 @@ services:
     links:
       - db
       - prometheus
+    restart: always
   redis-exporter:
     image: oliver006/redis_exporter
     ports:
       - 9121:9121
-    restart: unless-stopped
     environment:
       REDIS_ADDR: "redis:6379"
       REDIS_USER: null
@@ -99,7 +105,7 @@ services:
     links:
       - redis
       - prometheus
-
+    restart: always
 volumes:
   postgres_data:
   static_volume:
