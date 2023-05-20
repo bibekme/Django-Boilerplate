@@ -7,3 +7,4 @@ __pycache
 .venv/
 mediafiles/
 staticfiles/
+.vscode/
