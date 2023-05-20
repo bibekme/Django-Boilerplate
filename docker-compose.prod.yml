@@ -29,6 +29,8 @@ services:
       - 6379:6379
     env_file:
       - ./.env
+    command: >
+      --requirepass ${REDIS_PASSWORD}
     volumes:
       - redis_data:/data
     restart: always
