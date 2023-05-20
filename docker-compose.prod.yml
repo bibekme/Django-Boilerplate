@@ -29,6 +29,8 @@ services:
       - 6379:6379
     env_file:
       - ./.env
+    volumes:
+      - redis-data:/data
     restart: always
   nginx:
     build: ./nginx
