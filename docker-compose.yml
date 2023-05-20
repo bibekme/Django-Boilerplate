@@ -56,6 +56,10 @@ services:
     depends_on:
       - celeryworker
       - celeryscheduler
-
+  mailserver-dev:
+    image: rnwood/smtp4dev
+    ports:
+      - 2525:25
+      - 9000:80
 volumes:
   postgres_data:
