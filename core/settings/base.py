@@ -127,7 +127,3 @@ EMAIL_USE_TLS = bool(os.environ.get("EMAIL_USE_TLS", False))
 EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "user")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "password")
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "noreply@example.com")
-
-CELERY_BROKER_URL = os.environ.get(
-    "CELERY_BROKER_URL", "redis://:my_master_password@redis:6379/0"
-)
