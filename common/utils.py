@@ -21,9 +21,9 @@ def custom_mail_admins(subject, message):
 
 @shared_task
 def enqueue_email(
-    subject,
-    message,
     email,
+    subject,
+    message="",
     cc=[],
     bcc=[],
     subtype="text",
