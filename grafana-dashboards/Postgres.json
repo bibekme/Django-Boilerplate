@@ -243,7 +243,7 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "none"
         },
         "overrides": []
       },
@@ -253,11 +253,88 @@
         "x": 8,
         "y": 1
       },
-      "id": 10,
+      "id": 38,
       "links": [],
       "maxDataPoints": 100,
       "options": {
         "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.0.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "e6f95f3d-1a38-435e-90fb-3fcbc9f1769a"
+          },
+          "expr": "pg_settings_max_connections{release=\"$release\", instance=\"$instance\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "title": "Max Connections",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "e6f95f3d-1a38-435e-90fb-3fcbc9f1769a"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 4,
+        "x": 12,
+        "y": 1
+      },
+      "id": 72,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "background_solid",
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "horizontal",
@@ -277,14 +354,15 @@
             "type": "prometheus",
             "uid": "e6f95f3d-1a38-435e-90fb-3fcbc9f1769a"
           },
-          "expr": "SUM(pg_stat_database_tup_fetched{datname=~\"$datname\", instance=~\"$instance\"})",
+          "editorMode": "code",
+          "expr": "SUM(pg_stat_database_numbackends{release=\"$release\", datname=~\"$datname\", instance=~\"$instance\"})",
           "format": "time_series",
-          "intervalFactor": 2,
-          "refId": "A",
-          "step": 4
+          "intervalFactor": 1,
+          "range": true,
+          "refId": "A"
         }
       ],
-      "title": "Current fetch data",
+      "title": "Total Connections",
       "type": "stat"
     },
     {
@@ -328,7 +406,7 @@
       "gridPos": {
         "h": 2,
         "w": 4,
-        "x": 12,
+        "x": 16,
         "y": 1
       },
       "id": 71,
@@ -406,10 +484,10 @@
       "gridPos": {
         "h": 2,
         "w": 4,
-        "x": 16,
+        "x": 20,
         "y": 1
       },
-      "id": 12,
+      "id": 10,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -433,91 +511,14 @@
             "type": "prometheus",
             "uid": "e6f95f3d-1a38-435e-90fb-3fcbc9f1769a"
           },
-          "expr": "SUM(pg_stat_database_tup_updated{datname=~\"$datname\", instance=~\"$instance\"})",
+          "expr": "SUM(pg_stat_database_tup_fetched{datname=~\"$datname\", instance=~\"$instance\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "refId": "A",
           "step": 4
         }
       ],
-      "title": "Current update data",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "e6f95f3d-1a38-435e-90fb-3fcbc9f1769a"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "options": {
-                "match": "null",
-                "result": {
-                  "text": "N/A"
-                }
-              },
-              "type": "special"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 4,
-        "x": 20,
-        "y": 1
-      },
-      "id": 38,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "none",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "10.0.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "e6f95f3d-1a38-435e-90fb-3fcbc9f1769a"
-          },
-          "expr": "pg_settings_max_connections{release=\"$release\", instance=\"$instance\"}",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "refId": "A"
-        }
-      ],
-      "title": "Max Connections",
+      "title": "Current fetch data",
       "type": "stat"
     },
     {
@@ -2211,7 +2212,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.0.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2309,7 +2310,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.0.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2408,7 +2409,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.0.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2499,7 +2500,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.0.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2590,7 +2591,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.0.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2724,7 +2725,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.5.2",
+      "pluginVersion": "10.0.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2798,12 +2799,14 @@
       },
       "description": "Total amount of data written to temporary files by queries in this database. All temporary files are counted, regardless of why the temporary file was created, and regardless of the log_temp_files setting.",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 8,
         "x": 0,
         "y": 43
       },
+      "hiddenSeries": false,
       "id": 68,
       "legend": {
         "alignAsTable": true,
@@ -2820,7 +2823,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "10.0.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2842,6 +2849,7 @@
         }
       ],
       "thresholds": [],
+      "timeRegions": [],
       "title": "Temp File (Bytes)",
       "tooltip": {
         "shared": true,
@@ -2881,12 +2889,14 @@
         "uid": "e6f95f3d-1a38-435e-90fb-3fcbc9f1769a"
       },
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 16,
         "x": 8,
         "y": 43
       },
+      "hiddenSeries": false,
       "id": 70,
       "legend": {
         "alignAsTable": true,
@@ -2902,7 +2912,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "10.0.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2935,6 +2949,7 @@
         }
       ],
       "thresholds": [],
+      "timeRegions": [],
       "title": "Checkpoint Stats",
       "tooltip": {
         "shared": true,
@@ -3136,9 +3151,13 @@
       },
       {
         "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": {
           "type": "prometheus",
@@ -3163,9 +3182,13 @@
       },
       {
         "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": {
           "type": "prometheus",
@@ -3191,7 +3214,7 @@
     ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
@@ -3222,6 +3245,6 @@
   "timezone": "",
   "title": "PostgreSQL Database",
   "uid": "000000039",
-  "version": 2,
+  "version": 4,
   "weekStart": ""
 }
