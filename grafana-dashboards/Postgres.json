@@ -3153,10 +3153,10 @@
         "current": {
           "selected": true,
           "text": [
-            "All"
+            "minion"
           ],
           "value": [
-            "$__all"
+            "minion"
           ]
         },
         "datasource": {
@@ -3182,13 +3182,9 @@
       },
       {
         "current": {
-          "selected": true,
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": {
           "type": "prometheus",
@@ -3214,7 +3210,7 @@
     ]
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {
